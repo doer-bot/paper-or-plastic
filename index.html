@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper or Plastic Mill Valley - Is it Paper Cart or Container Cart week?</title>
+  <meta name="description" content="Instantly check if it's Paper Cart or Container Cart week in Mill Valley. Color-coded recycling schedule for Mill Valley Refuse dual stream recycling.">
+  <meta name="keywords" content="paper week, container week, recycling week, Mill Valley refuse, dual stream, paper cart, container cart, Mill Valley recycling schedule, paper or plastic">
+  <meta property="og:title" content="Paper or Plastic Mill Valley">
+  <meta property="og:description" content="Instantly check if it's Paper Cart or Container Cart week in Mill Valley.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://paperorplasticmillvalley.com">
+  <link rel="canonical" href="https://paperorplasticmillvalley.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      transition: background 0.7s ease;
+      overflow-x: hidden;
+    }
+    .bg-paper { background: linear-gradient(135deg, #78350f 0%, #92400e 40%, #854d0e 100%); }
+    .bg-container { background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 40%, #312e81 100%); }
+    .bg-loading { background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%); }
+
+    .watermark {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .watermark span {
+      position: absolute;
+      white-space: nowrap;
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .subtitle { color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+    .today-label { color: rgba(255,255,255,0.7); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem; }
+    .today-date { font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; }
+    @media (min-width: 640px) { .today-date { font-size: 2rem; } }
+    .this-week { color: rgba(255,255,255,0.8); font-size: 1.125rem; font-weight: 500; margin-bottom: 1.25rem; }
+
+    .cart-img { width: 7rem; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); margin-bottom: 1.25rem; }
+    @media (min-width: 640px) { .cart-img { width: 9rem; } }
+
+    .week-type { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; margin-bottom: 0.25rem; }
+    @media (min-width: 640px) { .week-type { font-size: 5rem; } }
+
+    .contents-label { font-size: 0.875rem; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; max-width: 20rem; }
+
+    .date-range-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 1.25rem;
+      transition: opacity 0.2s;
+    }
+    .date-range-btn:hover { opacity: 0.85; }
+    .date-range-btn.paper { background: rgba(59, 130, 246, 0.3); }
+    .date-range-btn.container { background: rgba(255, 255, 255, 0.12); }
+
+    .holiday-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: rgba(245, 158, 11, 0.2);
+      color: #fde68a;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      max-width: 24rem;
+      text-align: left;
+    }
+
+    .next-pickup { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+
+    .details-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .details-toggle svg { transition: transform 0.2s; }
+    .details-toggle.open svg { transform: rotate(180deg); }
+
+    .details-panel {
+      width: 100%;
+      max-width: 28rem;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      background: rgba(0,0,0,0.25);
+      text-align: left;
+      display: none;
+    }
+    .details-panel.open { display: block; }
+
+    .details-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .details-col { flex: 1; }
+    .details-col.center { text-align: center; }
+    .details-col.right { text-align: right; }
+    .details-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+    .details-value { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .details-value.current { color: #fff; font-weight: 700; }
+    .details-sub { font-size: 0.65rem; color: rgba(255,255,255,0.4); }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0; }
+
+    .cart-info { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .cart-info img { width: 2rem; height: auto; }
+    .cart-info-name { font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.8); }
+    .cart-info-desc { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+
+    .mcp-section { margin-top: 0; }
+    .mcp-heading { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem; }
+    .mcp-desc { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
+    .mcp-snippet {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+    }
+    .mcp-snippet:hover .copy-icon { color: rgba(255,255,255,0.6); }
+    .mcp-snippet-text { color: rgba(168, 216, 168, 0.8); flex: 1; text-align: left; }
+    .copy-icon { color: rgba(255,255,255,0.3); transition: color 0.2s; }
+    .copy-icon.copied { color: #4ade80; }
+
+    .source-link { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; }
+    .source-text { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
+    .setup-link { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.5rem; }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      position: relative;
+      z-index: 1;
+    }
+    footer .site-name { font-weight: 500; color: rgba(255,255,255,0.3); margin-bottom: 0.25rem; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: rgba(30,30,40,0.95);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      max-width: 24rem;
+      width: 100%;
+      color: #fff;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    .modal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .modal-nav button {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1.25rem;
+    }
+    .modal-month { font-size: 1.125rem; font-weight: 700; }
+    .cal-grid { display: grid; grid-template-columns: auto repeat(7, 1fr); gap: 0; }
+    .cal-header { text-align: center; padding: 0.25rem; font-size: 0.7rem; color: rgba(255,255,255,0.3); font-weight: 500; }
+    .cal-week-row {
+      display: contents;
+    }
+    .cal-week-bg {
+      display: grid;
+      grid-template-columns: auto repeat(7, 1fr);
+      grid-column: 1 / -1;
+      border-radius: 0.25rem;
+      margin-bottom: 2px;
+    }
+    .cal-week-bg.paper { background: rgba(180, 120, 40, 0.2); }
+    .cal-week-bg.container { background: rgba(40, 100, 220, 0.2); }
+    .cal-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0 0.25rem;
+      min-width: 1.25rem;
+    }
+    .cal-label.paper { color: #f59e0b; }
+    .cal-label.container { color: #60a5fa; }
+    .cal-day {
+      text-align: center;
+      padding: 0.375rem 0;
+      font-size: 0.8rem;
+      position: relative;
+    }
+    .cal-day.other-month { color: rgba(255,255,255,0.25); }
+    .cal-day.current-month { color: rgba(255,255,255,0.8); }
+    .cal-day.today { font-weight: 700; color: #fff; }
+    .cal-day.today::before {
+      content: '';
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      z-index: -1;
+    }
+    .cal-legend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .cal-legend-item { display: flex; align-items: center; gap: 0.375rem; }
+    .cal-legend-swatch { width: 0.75rem; height: 0.75rem; border-radius: 2px; }
+    .cal-legend-swatch.paper { background: rgba(180, 120, 40, 0.5); }
+    .cal-legend-swatch.container { background: rgba(40, 100, 220, 0.5); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .spinner {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 3px solid rgba(255,255,255,0.15);
+      border-top-color: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    .delay-1 { animation-delay: 0.05s; opacity: 0; }
+    .delay-2 { animation-delay: 0.1s; opacity: 0; }
+    .delay-3 { animation-delay: 0.15s; opacity: 0; }
+    .delay-4 { animation-delay: 0.2s; opacity: 0; }
+    .delay-5 { animation-delay: 0.25s; opacity: 0; }
+    .delay-6 { animation-delay: 0.3s; opacity: 0; }
+    .delay-7 { animation-delay: 0.35s; opacity: 0; }
+    .delay-8 { animation-delay: 0.4s; opacity: 0; }
+    .delay-9 { animation-delay: 0.45s; opacity: 0; }
+  </style>
+</head>
+<body class="bg-loading" id="body">
+  <div class="watermark" id="watermark" aria-hidden="true"></div>
+
+  <div class="main-content" id="main-content">
+    <div class="loading-state" id="loading">
+      <div class="spinner"></div>
+      <p style="color: rgba(255,255,255,0.5); font-size: 0.875rem;">Checking this week's schedule...</p>
+    </div>
+
+    <div id="schedule-content" style="display:none; flex-direction:column; align-items:center; width:100%; max-width:32rem;">
+      <p class="subtitle fade-in delay-1" id="location-label">Mill Valley Refuse</p>
+      <p class="today-label fade-in delay-2">Today is</p>
+      <h1 class="today-date fade-in delay-3" id="today-date"></h1>
+      <p class="this-week fade-in delay-4">This week is...</p>
+      <img class="cart-img fade-in delay-5" id="cart-img" src="" alt="">
+      <h2 class="week-type fade-in delay-6" id="week-type"></h2>
+      <p class="contents-label fade-in delay-7" id="contents-label"></p>
+      <div id="holiday-banner-container" class="fade-in delay-7"></div>
+      <button class="date-range-btn fade-in delay-8" id="date-range-btn" onclick="openCalendar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="date-range-text"></span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div id="next-pickup-container" class="fade-in delay-9"></div>
+
+      <button class="details-toggle fade-in delay-9" id="details-toggle" onclick="toggleDetails()">
+        More details
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+
+      <div class="details-panel" id="details-panel">
+        <div class="details-row">
+          <div class="details-col">
+            <div class="details-label">Last week</div>
+            <div class="details-value" id="prev-week-label"></div>
+            <div class="details-sub" id="prev-week-dates"></div>
+          </div>
+          <div style="color:rgba(255,255,255,0.25);">→</div>
+          <div class="details-col center">
+            <div class="details-label">This week</div>
+            <div class="details-value current" id="curr-week-label"></div>
+            <div class="details-sub" id="curr-week-dates"></div>
+          </div>
+          <div style="color:rgba(255,255,255,0.25);">→</div>
+          <div class="details-col right">
+            <div class="details-label">Next week</div>
+            <div class="details-value" id="next-week-label"></div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="cart-info">
+          <img src="images/paper-cart.png" alt="Paper cart" width="32">
+          <div>
+            <div class="cart-info-name">📄 Paper Cart</div>
+            <div class="cart-info-desc">Brown cart with blue lid — clean paper and cardboard recyclables only</div>
+          </div>
+        </div>
+        <div class="cart-info">
+          <img src="images/container-cart.png" alt="Container cart" width="32">
+          <div>
+            <div class="cart-info-name">♻️ Container Cart</div>
+            <div class="cart-info-desc">Brown cart with brown lid or all blue cart — bottles, cans, and plastic containers</div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="mcp-section">
+          <div class="mcp-heading">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            AI / MCP Integration
+          </div>
+          <div class="mcp-desc">Ask your AI assistant about Mill Valley recycling:</div>
+          <button class="mcp-snippet" onclick="copyMcp(this)">
+            <span class="mcp-snippet-text">npx paper-or-plastic-mcp</span>
+            <span class="copy-icon" id="copy-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </span>
+          </button>
+          <a href="https://dclaze.github.io/paper-or-plastic/mcp/" class="setup-link" target="_blank" rel="noopener noreferrer">
+            Setup instructions
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+        <hr class="divider">
+
+        <p class="source-text" id="source-text"></p>
+        <a href="https://www.millvalleyrefuse.com/residential-services/#calendar" target="_blank" rel="noopener noreferrer" class="source-link">
+          Mill Valley Refuse
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="site-name">paperorplasticmillvalley.com</div>
+    <p id="footer-source"></p>
+    <p>Not affiliated with Mill Valley Refuse Service</p>
+  </footer>
+
+  <div class="modal-overlay" id="calendar-modal" onclick="closeCalendar()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeCalendar()">✕</button>
+      <div class="modal-nav">
+        <button onclick="calPrev()">‹</button>
+        <span class="modal-month" id="cal-month-label"></span>
+        <button onclick="calNext()">›</button>
+      </div>
+      <div id="cal-grid"></div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-swatch paper"></div><span>P = Paper Cart</span></div>
+        <div class="cal-legend-item"><div class="cal-legend-swatch container"></div><span>C = Container Cart</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sr-only" aria-hidden="true">
+    <h2>Paper or Plastic Mill Valley - Recycling Schedule FAQ</h2>
+    <p>Is it paper week in Mill Valley? Is it recycling week? Paper or plastic this week Mill Valley? Which bin do I put out this week in Mill Valley? Mill Valley refuse schedule paper recycling container week. Mill Valley dual stream recycling pickup calendar. What week is it for recycling in Mill Valley? Is this paper week or recycling week? Mill Valley garbage pickup schedule. Marin County recycling schedule. Mill Valley trash collection. When is paper recycling week Mill Valley? When is container recycling week Mill Valley? Brown cart blue lid paper week. Blue cart container week bottles cans plastic. Mill Valley refuse service residential recycling. Is it paper or plastic week Mill Valley California? Mill Valley CA recycling schedule 2025 2026. Which cart do I put out Mill Valley? paperorplasticmillvalley.com paper or plastic mill valley today.</p>
+  </div>
+
+  <script>
+    const PAPER_ITEMS = ["Newspapers","Magazines","Junk Mail","Cardboard","Cereal Boxes","Paper Bags","Envelopes","Office Paper","Phone Books","Catalogs","Paper Tubes","Egg Cartons","Wrapping Paper","Shredded Paper","Notebook Paper","Construction Paper"];
+    const CONTAINER_ITEMS = ["Plastic Bottles","Aluminum Cans","Glass Bottles","Tin Cans","Milk Jugs","Detergent Bottles","Yogurt Cups","Food Cans","Soda Cans","Water Bottles","Juice Containers","Glass Jars","Plastic Tubs","Spray Cans","Beer Bottles","Wine Bottles"];
+
+    const FALLBACK_CONTAINER_START = new Date(2019, 6, 28);
+    const FALLBACK_PAPER_START = new Date(2019, 7, 4);
+
+    let scheduleData = null;
+    let calMonth, calYear;
+
+    function getSunday(date) {
+      const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      d.setDate(d.getDate() - d.getDay());
+      return d;
+    }
+
+    function formatDateKey(date) {
+      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    }
+
+    function formatDateDisplay(date) {
+      return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    function formatTodayDate() {
+      return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function getWeekTypeFromData(date) {
+      const sunday = getSunday(date);
+      const key = formatDateKey(sunday);
+
+      if (scheduleData && scheduleData.weeks) {
+        const week = scheduleData.weeks.find(w => w.weekStart === key);
+        if (week) return week.type;
+      }
+
+      return getWeekTypeFallback(date);
+    }
+
+    function getWeekTypeFallback(date) {
+      const sunday = getSunday(date);
+      const refSunday = getSunday(FALLBACK_PAPER_START);
+      const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+      const weeks = Math.round((sunday.getTime() - refSunday.getTime()) / msPerWeek);
+      const isEven = ((weeks % 2) + 2) % 2 === 0;
+      return isEven ? 'paper' : 'container';
+    }
+
+    function getHolidayForWeek(date) {
+      if (!scheduleData || !scheduleData.holidayWeeks) return null;
+      const sunday = getSunday(date);
+      const key = formatDateKey(sunday);
+      return scheduleData.holidayWeeks.find(h => h.weekStart === key) || null;
+    }
+
+    function renderWatermark(type) {
+      const items = type === 'paper' ? PAPER_ITEMS : CONTAINER_ITEMS;
+      const el = document.getElementById('watermark');
+      el.innerHTML = '';
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement('span');
+        span.textContent = items[i % items.length];
+        span.style.top = `${(i * 3.5) % 100}%`;
+        span.style.left = `${((i * 37) % 100)}%`;
+        span.style.fontSize = `${14 + (i % 4) * 6}px`;
+        span.style.transform = `rotate(${-15 + (i % 7) * 5}deg)`;
+        el.appendChild(span);
+      }
+    }
+
+    function renderSchedule() {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const currentType = getWeekTypeFromData(today);
+      const isPaper = currentType === 'paper';
+
+      const sunday = getSunday(today);
+      const saturday = new Date(sunday);
+      saturday.setDate(saturday.getDate() + 6);
+
+      const prevSunday = new Date(sunday);
+      prevSunday.setDate(prevSunday.getDate() - 7);
+      const prevSaturday = new Date(prevSunday);
+      prevSaturday.setDate(prevSaturday.getDate() + 6);
+      const prevType = getWeekTypeFromData(prevSunday);
+
+      const nextSunday = new Date(sunday);
+      nextSunday.setDate(nextSunday.getDate() + 7);
+      const nextType = getWeekTypeFromData(nextSunday);
+
+      document.getElementById('body').className = isPaper ? 'bg-paper' : 'bg-container';
+      renderWatermark(currentType);
+
+      document.getElementById('today-date').textContent = formatTodayDate();
+      document.getElementById('cart-img').src = isPaper ? 'images/paper-cart.png' : 'images/container-cart.png';
+      document.getElementById('cart-img').alt = isPaper ? 'Brown cart with blue lid for paper recycling' : 'Blue cart for container recycling';
+      document.getElementById('week-type').textContent = isPaper ? 'Paper Cart' : 'Container Cart';
+      document.getElementById('contents-label').textContent = isPaper
+        ? 'Clean paper and cardboard recyclables only'
+        : 'Clean bottles, cans, and plastic container recyclables only';
+
+      const btnClass = isPaper ? 'paper' : 'container';
+      const btn = document.getElementById('date-range-btn');
+      btn.className = `date-range-btn fade-in delay-8 ${btnClass}`;
+      document.getElementById('date-range-text').textContent = `${formatDateDisplay(sunday)} – ${formatDateDisplay(saturday)}`;
+
+      const holiday = getHolidayForWeek(today);
+      const holidayContainer = document.getElementById('holiday-banner-container');
+      if (holiday) {
+        holidayContainer.innerHTML = `<div class="holiday-banner">⚠️ ${holiday.message}</div>`;
+      } else {
+        holidayContainer.innerHTML = '';
+      }
+
+      const dayOfWeek = today.getDay();
+      const nextPickupContainer = document.getElementById('next-pickup-container');
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        const nextMonday = new Date(today);
+        nextMonday.setDate(nextMonday.getDate() + (dayOfWeek === 0 ? 1 : 2));
+        nextPickupContainer.innerHTML = `<div class="next-pickup">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Next pickup: ${nextMonday.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+        </div>`;
+      } else {
+        nextPickupContainer.innerHTML = '';
+      }
+
+      document.getElementById('prev-week-label').textContent = prevType === 'paper' ? 'Paper Cart' : 'Container Cart';
+      document.getElementById('prev-week-dates').textContent = `${formatDateDisplay(prevSunday)} – ${formatDateDisplay(prevSaturday)}`;
+      document.getElementById('curr-week-label').textContent = isPaper ? 'Paper Cart' : 'Container Cart';
+      document.getElementById('curr-week-dates').textContent = `${formatDateDisplay(sunday)} – ${formatDateDisplay(saturday)}`;
+      document.getElementById('next-week-label').textContent = nextType === 'paper' ? 'Paper Cart' : 'Container Cart';
+
+      const calYear = scheduleData?.calendarYear || '2025-2026';
+      document.getElementById('source-text').textContent = `Source: ${calYear} Dual Stream Recycling Calendar`;
+      document.getElementById('footer-source').textContent = `Data from Mill Valley Refuse ${calYear} calendar`;
+
+      document.getElementById('loading').style.display = 'none';
+      const content = document.getElementById('schedule-content');
+      content.style.display = 'flex';
+    }
+
+    function toggleDetails() {
+      const panel = document.getElementById('details-panel');
+      const toggle = document.getElementById('details-toggle');
+      panel.classList.toggle('open');
+      toggle.classList.toggle('open');
+    }
+
+    function copyMcp(btn) {
+      navigator.clipboard.writeText('npx paper-or-plastic-mcp').then(() => {
+        const icon = btn.querySelector('.copy-icon');
+        icon.classList.add('copied');
+        icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        setTimeout(() => {
+          icon.classList.remove('copied');
+          icon.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        }, 2000);
+      });
+    }
+
+    function openCalendar() {
+      const now = new Date();
+      calMonth = now.getMonth();
+      calYear = now.getFullYear();
+      renderCalendar();
+      document.getElementById('calendar-modal').classList.add('open');
+    }
+
+    function closeCalendar() {
+      document.getElementById('calendar-modal').classList.remove('open');
+    }
+
+    function calPrev() {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    }
+
+    function calNext() {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const firstDay = new Date(calYear, calMonth, 1);
+      const monthName = firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      document.getElementById('cal-month-label').textContent = monthName;
+
+      const startSunday = new Date(firstDay);
+      startSunday.setDate(startSunday.getDate() - startSunday.getDay());
+
+      const lastDay = new Date(calYear, calMonth + 1, 0);
+      const endSaturday = new Date(lastDay);
+      endSaturday.setDate(endSaturday.getDate() + (6 - endSaturday.getDay()));
+
+      const now = new Date();
+      const todayKey = formatDateKey(now);
+
+      let html = '<div style="display:grid; grid-template-columns: auto repeat(7,1fr); gap:0;">';
+      html += '<div class="cal-header"></div>';
+      ['S','M','T','W','T','F','S'].forEach(d => {
+        html += `<div class="cal-header">${d}</div>`;
+      });
+
+      const current = new Date(startSunday);
+      while (current <= endSaturday) {
+        const weekType = getWeekTypeFromData(current);
+        const label = weekType === 'paper' ? 'P' : 'C';
+        html += `<div class="cal-week-bg ${weekType}">`;
+        html += `<div class="cal-label ${weekType}">${label}</div>`;
+
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(current);
+          const key = formatDateKey(d);
+          const isCurrentMonth = d.getMonth() === calMonth;
+          const isToday = key === todayKey;
+          let cls = 'cal-day';
+          if (isToday) cls += ' today';
+          else if (isCurrentMonth) cls += ' current-month';
+          else cls += ' other-month';
+          html += `<div class="${cls}">${d.getDate()}</div>`;
+          current.setDate(current.getDate() + 1);
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+
+      document.getElementById('cal-grid').innerHTML = html;
+    }
+
+    async function init() {
+      try {
+        const resp = await fetch('schedule-data.json');
+        if (resp.ok) {
+          scheduleData = await resp.json();
+        }
+      } catch (e) {
+        console.warn('Could not load schedule-data.json, using fallback calculation');
+      }
+      renderSchedule();
+    }
+
+    init();
+  </script>
+</body>
+</html>
