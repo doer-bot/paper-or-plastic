@@ -1,0 +1,477 @@
+{
+  "generated": "2026-02-24T16:31:50.566Z",
+  "source": "google-calendar",
+  "calendarIds": {
+    "container": "uokfjeogcqe0daugrn58mvkgo0@group.calendar.google.com",
+    "paper": "d5mdlvop2qp45vmstm6gs5p1kg@group.calendar.google.com",
+    "main": "millvalleyrefuse@gmail.com"
+  },
+  "recurrence": {
+    "containerStart": "2019-07-28",
+    "paperStart": "2019-08-04",
+    "intervalWeeks": 2
+  },
+  "weeks": [
+    {
+      "weekStart": "2025-08-31",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-09-07",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-09-14",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-09-21",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-09-28",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-10-05",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-10-12",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-10-19",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-10-26",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-11-02",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-11-09",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-11-16",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-11-23",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-11-30",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-12-07",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-12-14",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2025-12-21",
+      "type": "container"
+    },
+    {
+      "weekStart": "2025-12-28",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-01-04",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-01-11",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-01-18",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-01-25",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-02-01",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-02-08",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-02-15",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-02-22",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-03-01",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-03-08",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-03-15",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-03-22",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-03-29",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-04-05",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-04-12",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-04-19",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-04-26",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-05-03",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-05-10",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-05-17",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-05-24",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-05-31",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-06-07",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-06-14",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-06-21",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-06-28",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-07-05",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-07-12",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-07-19",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-07-26",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-08-02",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-08-09",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-08-16",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-08-23",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-08-30",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-09-06",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-09-13",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-09-20",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-09-27",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-10-04",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-10-11",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-10-18",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-10-25",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-11-01",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-11-08",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-11-15",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-11-22",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-11-29",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-12-06",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-12-13",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2026-12-20",
+      "type": "container"
+    },
+    {
+      "weekStart": "2026-12-27",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-01-03",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-01-10",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-01-17",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-01-24",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-01-31",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-02-07",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-02-14",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-02-21",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-02-28",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-03-07",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-03-14",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-03-21",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-03-28",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-04-04",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-04-11",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-04-18",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-04-25",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-05-02",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-05-09",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-05-16",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-05-23",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-05-30",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-06-06",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-06-13",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-06-20",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-06-27",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-07-04",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-07-11",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-07-18",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-07-25",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-08-01",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-08-08",
+      "type": "paper"
+    },
+    {
+      "weekStart": "2027-08-15",
+      "type": "container"
+    },
+    {
+      "weekStart": "2027-08-22",
+      "type": "paper"
+    }
+  ],
+  "holidayWeeks": [
+    {
+      "weekStart": "2024-12-29",
+      "holidayDate": "2025-01-01",
+      "holidayName": "Office Closed - No Collection Service",
+      "dayOfWeek": 3,
+      "message": "Pickups on Wed or later are delayed one day this week."
+    },
+    {
+      "weekStart": "2025-12-28",
+      "holidayDate": "2026-01-01",
+      "holidayName": "Office Closed - No Collection Service",
+      "dayOfWeek": 4,
+      "message": "Pickups on Thu or later are delayed one day this week."
+    },
+    {
+      "weekStart": "2026-12-27",
+      "holidayDate": "2027-01-01",
+      "holidayName": "Office Closed - No Collection Service",
+      "dayOfWeek": 5,
+      "message": "Pickups on Fri or later are delayed one day this week."
+    },
+    {
+      "weekStart": "2025-12-21",
+      "holidayDate": "2025-12-25",
+      "holidayName": "Office Closed - No Collection Service",
+      "dayOfWeek": 4,
+      "message": "Pickups on Thu or later are delayed one day this week."
+    },
+    {
+      "weekStart": "2026-12-20",
+      "holidayDate": "2026-12-25",
+      "holidayName": "Office Closed - No Collection Service",
+      "dayOfWeek": 5,
+      "message": "Pickups on Fri or later are delayed one day this week."
+    }
+  ],
+  "anomalies": [],
+  "calendarYear": "2025-2026",
+  "dataSource": "Mill Valley Refuse 2025-2026 Dual Stream Recycling Calendar",
+  "feedUrls": {
+    "container": "https://calendar.google.com/calendar/ical/uokfjeogcqe0daugrn58mvkgo0%40group.calendar.google.com/public/basic.ics",
+    "paper": "https://calendar.google.com/calendar/ical/d5mdlvop2qp45vmstm6gs5p1kg%40group.calendar.google.com/public/basic.ics",
+    "main": "https://calendar.google.com/calendar/ical/millvalleyrefuse%40gmail.com/public/basic.ics"
+  }
+}
