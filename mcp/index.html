@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper or Plastic MCP - Mill Valley Recycling Schedule for AI</title>
+  <meta name="description" content="MCP server that lets AI assistants check the Mill Valley recycling schedule. Paper Cart or Container Cart week, instantly.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 640px; width: 100%; }
+    h1 { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+    .install-box { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .install-box h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; }
+    pre { background: rgba(0,0,0,0.4); border-radius: 8px; padding: 1rem; overflow-x: auto; font-size: 0.9rem; line-height: 1.5; color: #a8d8a8; }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; }
+    .tools { display: grid; gap: 1rem; margin-bottom: 2rem; }
+    .tool { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 1.25rem; }
+    .tool h3 { font-size: 1rem; color: #7eb8ff; margin-bottom: 0.35rem; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .tool p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+    .links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .links a { color: #7eb8ff; text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border: 1px solid rgba(126,184,255,0.3); border-radius: 8px; transition: background 0.2s; }
+    .links a:hover { background: rgba(126,184,255,0.1); }
+    footer { margin-top: auto; padding-top: 2rem; font-size: 0.8rem; color: rgba(255,255,255,0.3); text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Paper or Plastic MCP</h1>
+    <p class="subtitle">Let your AI assistant check the Mill Valley recycling schedule</p>
+
+    <div class="install-box">
+      <h2>Claude Desktop / Cursor</h2>
+      <pre><code>{
+  "mcpServers": {
+    "paper-or-plastic": {
+      "command": "npx",
+      "args": ["-y", "paper-or-plastic-mcp"]
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="install-box">
+      <h2>Then just ask</h2>
+      <pre><code>"Is it paper or plastic week in Mill Valley?"</code></pre>
+    </div>
+
+    <h2 style="font-size: 1rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Tools</h2>
+    <div class="tools">
+      <div class="tool">
+        <h3>get_recycling_week</h3>
+        <p>Check if it's Paper Cart or Container Cart week right now. Includes holiday pickup delay info.</p>
+      </div>
+      <div class="tool">
+        <h3>get_upcoming_schedule</h3>
+        <p>See the next several weeks of the recycling schedule with holiday awareness.</p>
+      </div>
+      <div class="tool">
+        <h3>check_specific_date</h3>
+        <p>Check what recycling type any specific date falls on.</p>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="https://dclaze.github.io/paper-or-plastic/">Website</a>
+      <a href="https://github.com/dclaze/paper-or-plastic">GitHub</a>
+      <a href="https://www.npmjs.com/package/paper-or-plastic-mcp">npm</a>
+      <a href="https://www.millvalleyrefuse.com/residential-services/#calendar">Data Source</a>
+    </div>
+  </div>
+
+  <footer>
+    Data from Mill Valley Refuse Google Calendar feeds (auto-updated monthly)<br>
+    Not affiliated with Mill Valley Refuse Service
+  </footer>
+</body>
+</html>
