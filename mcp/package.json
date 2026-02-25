@@ -1,0 +1,36 @@
+{
+  "name": "paper-or-plastic-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Mill Valley recycling schedule - instantly check if it's Paper Cart or Container Cart week",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "paper-or-plastic-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "schedule.js",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "recycling",
+    "mill-valley",
+    "paper-or-plastic"
+  ],
+  "author": "dclaze",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dclaze/paper-or-plastic"
+  },
+  "homepage": "https://dclaze.github.io/paper-or-plastic",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.25.0"
+  }
+}
